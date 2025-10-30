@@ -8,24 +8,25 @@
     "net9.0": []
   },
   "packageFolders": {
-    "/home/chucho/.nuget/packages/": {}
+    "/home/royercamilo/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/chucho/RiderProjects/SistemaRestaurante/SistemaRestaurante/SistemaRestaurante.csproj",
+      "projectUniqueName": "/home/royercamilo/RiderProjects/SistemaRestaurante/SistemaRestaurante/SistemaRestaurante.csproj",
       "projectName": "SistemaRestaurante",
-      "projectPath": "/home/chucho/RiderProjects/SistemaRestaurante/SistemaRestaurante/SistemaRestaurante.csproj",
-      "packagesPath": "/home/chucho/.nuget/packages/",
-      "outputPath": "/home/chucho/RiderProjects/SistemaRestaurante/SistemaRestaurante/obj/",
+      "projectPath": "/home/royercamilo/RiderProjects/SistemaRestaurante/SistemaRestaurante/SistemaRestaurante.csproj",
+      "packagesPath": "/home/royercamilo/.nuget/packages/",
+      "outputPath": "/home/royercamilo/RiderProjects/SistemaRestaurante/SistemaRestaurante/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/chucho/.nuget/NuGet/NuGet.Config"
+        "/home/royercamilo/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -44,7 +45,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -65,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.111/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
