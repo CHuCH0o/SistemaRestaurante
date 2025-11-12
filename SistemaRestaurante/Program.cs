@@ -1,11 +1,15 @@
-﻿namespace SistemaRestaurante;
-
-class Program
-    
+﻿namespace SistemaRestaurante
 {
-    static void Main(string[] args)
+    // este es el programa principal
+    // aqui por ahora solo muestro un mensaje
+
+    internal class Program
     {
-        Console.WriteLine("Hello compadre");
+        static void Main(string[] args)
+        {
+            Console.WriteLine("sistema restaurante");
+            Console.WriteLine("presione enter para salir");
+            Console.ReadLine();
+        }
     }
-    
 }
