@@ -1,4 +1,7 @@
-﻿namespace SistemaRestaurante
+﻿using System;
+    
+
+namespace SistemaRestaurante
 {
     // este es el programa principal
     // aqui por ahora solo muestro un mensaje
