@@ -6,7 +6,7 @@ namespace SistemaRestaurante
     {
         public string Nit;
         public string Nombre;
-        public string Dueño;
+        public string Dueno;
         public string Celular;
         public string Direccion;
     }
