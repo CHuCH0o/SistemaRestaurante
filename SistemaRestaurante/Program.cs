@@ -1,5 +1,5 @@
 ﻿using System;
-    
+
 
 namespace SistemaRestaurante
 {
@@ -10,9 +10,58 @@ namespace SistemaRestaurante
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("sistema restaurante");
-            Console.WriteLine("presione enter para salir");
-            Console.ReadLine();
+
+            // aqui creo la lista de restaurantes
+            ListaEnlazada<Restaurante> restaurantes = new ListaEnlazada<Restaurante>();
+
+            // aqui empieza el ciclo del sistema
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("====================================");
+                Console.WriteLine("         SISTEMA RESTAURANTE");
+                Console.WriteLine("====================================");
+                Console.WriteLine("1. Restaurantes");
+                Console.WriteLine("2. Clientes");
+                Console.WriteLine("3. Platos");
+                Console.WriteLine("4. Pedidos");
+                Console.WriteLine("5. Reportes");
+                Console.WriteLine("------------------------------------");
+                Console.Write("Seleccione una opcion: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {
+                    Restaurante.MenuRestaurantes(restaurantes);
+                }
+                else if (opcion == "2")
+                {
+                    Console.WriteLine("clientes aun no implementado");
+                    Console.ReadLine();
+                }
+                else if (opcion == "3")
+                {
+                    Console.WriteLine("platos aun no implementado");
+                    Console.ReadLine();
+                }
+                else if (opcion == "4")
+                {
+                    Console.WriteLine("pedidos aun no implementado");
+                    Console.ReadLine();
+                }
+                else if (opcion == "5")
+                {
+                    Console.WriteLine("reportes aun no implementado");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("opcion invalida");
+                    Console.WriteLine("presione enter para seguir");
+                    Console.ReadLine();
+
+                }
+            }
         }
     }
 }

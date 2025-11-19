@@ -68,5 +68,127 @@ namespace SistemaRestaurante
             }
             return null;
         }
+        
+        
+        // aqui se maneja el menu de restaurantes
+        public static void MenuRestaurantes(ListaEnlazada<Restaurante> restaurantes)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== RESTAURANTES ===");
+                Console.WriteLine("1. Crear restaurante");
+                Console.WriteLine("2. Editar restaurante");
+                Console.WriteLine("3. Listar restaurantes");
+                Console.WriteLine("0. Volver al menu principal");
+                Console.WriteLine("---------------------------");
+                Console.Write("Seleccione una opcion: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {
+                    CrearRestaurante(restaurantes);
+                }
+                else if (opcion == "2")
+                {
+                    Console.WriteLine("editar restaurante aun no implementado");
+                    Console.ReadLine();
+                }
+                else if (opcion == "3")
+                {
+                    ListarRestaurantes(restaurantes, true);
+                }
+                else if (opcion == "0")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("opcion invalida");
+                    Console.WriteLine("presione enter para seguir");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+        // aqui creo un restaurante nuevo
+        public static void CrearRestaurante(ListaEnlazada<Restaurante> restaurantes)
+        {
+            Console.Clear();
+            Console.WriteLine("=== CREAR RESTAURANTE ===");
+
+            Restaurante nuevo = new Restaurante();
+
+            Console.Write("ingrese nit: ");
+            nuevo.Nit = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(nuevo.Nit))
+            {
+                Console.WriteLine("nit invalido");
+                Console.ReadLine();
+                return;
+            }
+
+            if (BuscarPorNit(restaurantes, nuevo.Nit) != null)
+            {
+                Console.WriteLine("ya existe un restaurante con ese nit");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write("ingrese nombre: ");
+            nuevo.Nombre = Console.ReadLine();
+
+            Console.Write("ingrese dueño: ");
+            nuevo.Dueno = Console.ReadLine();
+
+            Console.Write("ingrese celular: ");
+            nuevo.Celular = Console.ReadLine();
+
+            if (!EsCelularValido(nuevo.Celular))
+            {
+                Console.WriteLine("celular invalido debe tener 10 numeros");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Write("ingrese direccion: ");
+            nuevo.Direccion = Console.ReadLine();
+
+            restaurantes.Agregar(nuevo);
+
+            Console.WriteLine("restaurante creado");
+            Console.ReadLine();
+        }
+
+        // aqui muestro la lista de restaurantes
+        public static void ListarRestaurantes(ListaEnlazada<Restaurante> restaurantes, bool esperar)
+        {
+            Console.Clear();
+            Console.WriteLine("=== LISTA DE RESTAURANTES ===");
+
+            Nodo<Restaurante> actual = restaurantes.Cabeza;
+            int indice = 0;
+
+            if (actual == null)
+            {
+                Console.WriteLine("no hay restaurantes");
+            }
+
+            while (actual != null)
+            {
+                Restaurante r = actual.Valor;
+                Console.WriteLine((indice + 1) + ". " + r.Nit + " - " + r.Nombre + " - " + r.Dueno + " - " + r.Celular);
+                indice++;
+                actual = actual.Siguiente;
+            }
+
+            Console.WriteLine("---------------------------");
+            if (esperar)
+            {
+                Console.WriteLine("presione enter para seguir");
+                Console.ReadLine();
+            }
+        }
     }
 }
