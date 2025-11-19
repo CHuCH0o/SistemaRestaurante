@@ -240,7 +240,7 @@ namespace SistemaRestaurante
                 Restaurante r = Restaurante.SeleccionarRestaurante(restaurantes);
                 if (r == null) continue;
 
-                if (op == "1") VerPlatosServidosHoy(r);
+                
                 else if (op == "2") VerGananciasDia(r);
                 else
                 {
@@ -249,6 +249,15 @@ namespace SistemaRestaurante
                 }
             }
         }
-        
+        // ver ganancias del dia
+        public static void VerGananciasDia(Restaurante r)
+        {
+            Console.Clear();
+            Console.WriteLine("=== GANANCIAS DEL DIA ===");
+            Console.WriteLine(r.GananciasDia);
+            Console.WriteLine("presione enter para seguir");
+            Console.ReadLine();
+        }
     }
-}
+} 
+    
