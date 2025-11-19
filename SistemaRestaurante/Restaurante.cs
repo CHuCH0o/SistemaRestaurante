@@ -189,6 +189,111 @@ namespace SistemaRestaurante
                 Console.WriteLine("presione enter para seguir");
                 Console.ReadLine();
             }
+            
+            // aqui selecciono un restaurante de la lista usando un numero
+            Restaurante SeleccionarRestaurante(ListaEnlazada<Restaurante> restaurantes)
+            {
+                while (true)
+                {
+                    ListarRestaurantes(restaurantes, false);
+                    Console.WriteLine("0. Volver");
+                    Console.Write("Seleccione un numero: ");
+                    string texto = Console.ReadLine();
+
+                    int opcion;
+                    if (!int.TryParse(texto, out opcion))
+                    {
+                        Console.WriteLine("opcion invalida");
+                        Console.ReadLine();
+                        return null;
+                    }
+
+                    if (opcion == 0)
+                    {
+                        return null;
+                    }
+
+                    int indice = opcion - 1;
+                    int total = restaurantes.Longitud();
+
+                    if (indice < 0 || indice >= total)
+                    {
+                        Console.WriteLine("opcion invalida");
+                        Console.ReadLine();
+                        return null;
+                    }
+
+                    Restaurante r = restaurantes.ObtenerPorIndice(indice);
+                    return r;
+                }
+            }
+            
+            // aqui edito un restaurante
+            void EditarRestaurante(ListaEnlazada<Restaurante> restaurantes)
+            {
+                Console.Clear();
+                Console.WriteLine("=== EDITAR RESTAURANTE ===");
+
+                Restaurante r = SeleccionarRestaurante(restaurantes);
+                if (r == null)
+                {
+                    return;
+                }
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("restaurante seleccionado");
+                    Console.WriteLine(r.Nit + " - " + r.Nombre + " - " + r.Dueno + " - " + r.Celular + " - " + r.Direccion);
+                    Console.WriteLine();
+                    Console.WriteLine("1. Cambiar nombre");
+                    Console.WriteLine("2. Cambiar dueño");
+                    Console.WriteLine("3. Cambiar celular");
+                    Console.WriteLine("4. Cambiar direccion");
+                    Console.WriteLine("0. Volver");
+                    Console.Write("Seleccione una opcion: ");
+                    string opcion = Console.ReadLine();
+
+                    if (opcion == "1")
+                    {
+                        Console.Write("nuevo nombre: ");
+                        r.Nombre = Console.ReadLine();
+                    }
+                    else if (opcion == "2")
+                    {
+                        Console.Write("nuevo dueño: ");
+                        r.Dueno = Console.ReadLine();
+                    }
+                    else if (opcion == "3")
+                    {
+                        Console.Write("nuevo celular: ");
+                        string cel = Console.ReadLine();
+                        if (EsCelularValido(cel))
+                        {
+                            r.Celular = cel;
+                        }
+                        else
+                        {
+                            Console.WriteLine("celular invalido");
+                            Console.ReadLine();
+                        }
+                    }
+                    else if (opcion == "4")
+                    {
+                        Console.Write("nueva direccion: ");
+                        r.Direccion = Console.ReadLine();
+                    }
+                    else if (opcion == "0")
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("opcion invalida");
+                        Console.ReadLine();
+                    }
+                }
+            }
         }
     }
 }
