@@ -159,6 +159,68 @@ namespace SistemaRestaurante
             Console.WriteLine("pedido guardado");
             Console.ReadLine();
         }
-        
+        // ver pedidos pendientes
+        public static void VerPedidosPendientes(Restaurante r)
+        {
+            Console.Clear();
+            Console.WriteLine("=== PEDIDOS PENDIENTES ===");
+
+            if (r.ColaPedidos.EstaVacia())
+            {
+                Console.WriteLine("no hay pedidos pendientes");
+            }
+            else
+            {
+                r.ColaPedidos.Recorrer(p =>
+                {
+                    Console.WriteLine("id " + p.IdPedido + " cliente " + p.ClientePedido.NombreCompleto + " total " + p.Total);
+                });
+            }
+
+            Console.WriteLine("presione enter para seguir");
+            Console.ReadLine();
+        }
+
+        // despachar pedido
+        public static void DespacharPedido(Restaurante r)
+        {
+            Console.Clear();
+            Console.WriteLine("=== DESPACHAR PEDIDO ===");
+
+            if (r.ColaPedidos.EstaVacia())
+            {
+                Console.WriteLine("no hay pedidos pendientes");
+                Console.ReadLine();
+                return;
+            }
+
+            Pedido p = r.ColaPedidos.Primero();
+
+            Console.WriteLine("id " + p.IdPedido);
+            Console.WriteLine("cliente " + p.ClientePedido.NombreCompleto);
+            Console.WriteLine("total " + p.Total);
+            Console.Write("confirmar s n: ");
+            string conf = Console.ReadLine();
+
+            if (conf == null || conf.ToLower() != "s")
+            {
+                Console.WriteLine("accion cancelada");
+                Console.ReadLine();
+                return;
+            }
+
+            p.Estado = "DESPACHADO";
+
+            if (p.FechaHora.Date == DateTime.Now.Date)
+            {
+                r.GananciasDia += p.Total;
+            }
+
+            r.HistorialPedidos.AgregarElemento(p);
+            r.ColaPedidos.Eliminar();
+
+            Console.WriteLine("pedido despachado");
+            Console.ReadLine();
+        }
     }
 }
