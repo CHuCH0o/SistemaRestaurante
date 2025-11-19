@@ -26,10 +26,8 @@ namespace SistemaRestaurante
         {
             PlatosPedido = new ListaEnlazada<PlatoPedido>();
         }
-
-        // =====================
-        // TOMAR PEDIDO
-        // =====================
+        
+        // tomar pedido
 
         public static void TomarPedido(Restaurante r)
         {
