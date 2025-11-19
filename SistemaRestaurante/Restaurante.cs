@@ -11,15 +11,14 @@ namespace SistemaRestaurante
         public string Dueno;
         public string Celular;
         public string Direccion;
-        
-        // estas son las listas relacionadas con el restaurante
+
         public ListaEnlazada<Cliente> Clientes;
         public ListaEnlazada<Plato> Platos;
         public Cola<Pedido> ColaPedidos;
         public Pila<Pedido> HistorialPedidos;
         public decimal GananciasDia;
 
-        // constructor para dejar todo listo
+        // constructor
         public Restaurante()
         {
             Clientes = new ListaEnlazada<Cliente>();
@@ -27,50 +26,39 @@ namespace SistemaRestaurante
             ColaPedidos = new Cola<Pedido>();
             HistorialPedidos = new Pila<Pedido>();
             GananciasDia = 0;
-            
         }
 
-        // aqui reviso que el celular tenga diez numeros
+        // validacion de celular
         public static bool EsCelularValido(string celular)
         {
-            if (string.IsNullOrWhiteSpace(celular))
-            {
-                return false;
-            }
-
-            if (celular.Length != 10)
-            {
-                return false;
-            }
+            if (string.IsNullOrWhiteSpace(celular)) return false;
+            if (celular.Length != 10) return false;
 
             foreach (char c in celular)
             {
-                if (!char.IsDigit(c))
-                {
-                    return false;
-                }
+                if (!char.IsDigit(c)) return false;
             }
 
             return true;
         }
 
-        // aqui busco un restaurante por nit en la lista
+        // buscar restaurante por nit
         public static Restaurante BuscarPorNit(ListaEnlazada<Restaurante> restaurantes, string nit)
         {
-            Nodo<Restaurante> actual = restaurantes.Cabeza;
-            while (actual != null)
+            Nodo<Restaurante> act = restaurantes.Cabeza;
+            while (act != null)
             {
-                if (actual.Valor.Nit == nit)
+                if (act.Valor.Nit == nit)
                 {
-                    return actual.Valor;
+                    return act.Valor;
                 }
-                actual = actual.Siguiente;
+                act = act.Siguiente;
             }
             return null;
         }
-        
-        
-        // aqui se maneja el menu de restaurantes
+
+
+        // menu restaurantes
         public static void MenuRestaurantes(ListaEnlazada<Restaurante> restaurantes)
         {
             while (true)
@@ -81,217 +69,202 @@ namespace SistemaRestaurante
                 Console.WriteLine("2. Editar restaurante");
                 Console.WriteLine("3. Listar restaurantes");
                 Console.WriteLine("0. Volver al menu principal");
-                Console.WriteLine("---------------------------");
                 Console.Write("Seleccione una opcion: ");
-                string opcion = Console.ReadLine();
+                string op = Console.ReadLine();
 
-                if (opcion == "1")
+                if (op == "0")
+                {
+                    return;
+                }
+
+                if (op == "1")
                 {
                     CrearRestaurante(restaurantes);
                 }
-                else if (opcion == "2")
+                else if (op == "2")
                 {
-                    Console.WriteLine("editar restaurante aun no implementado");
-                    Console.ReadLine();
+                    EditarRestaurante(restaurantes);
                 }
-                else if (opcion == "3")
+                else if (op == "3")
                 {
                     ListarRestaurantes(restaurantes, true);
-                }
-                else if (opcion == "0")
-                {
-                    return;
                 }
                 else
                 {
                     Console.WriteLine("opcion invalida");
-                    Console.WriteLine("presione enter para seguir");
                     Console.ReadLine();
                 }
             }
         }
 
-        // aqui creo un restaurante nuevo
+
+        // crear restaurante
         public static void CrearRestaurante(ListaEnlazada<Restaurante> restaurantes)
         {
             Console.Clear();
             Console.WriteLine("=== CREAR RESTAURANTE ===");
 
-            Restaurante nuevo = new Restaurante();
+            Restaurante r = new Restaurante();
 
-            Console.Write("ingrese nit: ");
-            nuevo.Nit = Console.ReadLine();
+            Console.Write("nit: ");
+            r.Nit = Console.ReadLine();
 
-            if (string.IsNullOrWhiteSpace(nuevo.Nit))
+            if (string.IsNullOrWhiteSpace(r.Nit))
             {
                 Console.WriteLine("nit invalido");
                 Console.ReadLine();
                 return;
             }
 
-            if (BuscarPorNit(restaurantes, nuevo.Nit) != null)
+            if (BuscarPorNit(restaurantes, r.Nit) != null)
             {
                 Console.WriteLine("ya existe un restaurante con ese nit");
                 Console.ReadLine();
                 return;
             }
 
-            Console.Write("ingrese nombre: ");
-            nuevo.Nombre = Console.ReadLine();
+            Console.Write("nombre: ");
+            r.Nombre = Console.ReadLine();
 
-            Console.Write("ingrese dueño: ");
-            nuevo.Dueno = Console.ReadLine();
+            Console.Write("dueño: ");
+            r.Dueno = Console.ReadLine();
 
-            Console.Write("ingrese celular: ");
-            nuevo.Celular = Console.ReadLine();
+            Console.Write("celular: ");
+            r.Celular = Console.ReadLine();
 
-            if (!EsCelularValido(nuevo.Celular))
+            if (!EsCelularValido(r.Celular))
             {
-                Console.WriteLine("celular invalido debe tener 10 numeros");
+                Console.WriteLine("celular invalido");
                 Console.ReadLine();
                 return;
             }
 
-            Console.Write("ingrese direccion: ");
-            nuevo.Direccion = Console.ReadLine();
+            Console.Write("direccion: ");
+            r.Direccion = Console.ReadLine();
 
-            restaurantes.Agregar(nuevo);
+            restaurantes.Agregar(r);
 
             Console.WriteLine("restaurante creado");
             Console.ReadLine();
         }
 
-        // aqui muestro la lista de restaurantes
+
+        // listar restaurantes
         public static void ListarRestaurantes(ListaEnlazada<Restaurante> restaurantes, bool esperar)
         {
             Console.Clear();
             Console.WriteLine("=== LISTA DE RESTAURANTES ===");
 
-            Nodo<Restaurante> actual = restaurantes.Cabeza;
-            int indice = 0;
+            Nodo<Restaurante> act = restaurantes.Cabeza;
+            int i = 0;
 
-            if (actual == null)
+            if (act == null)
             {
                 Console.WriteLine("no hay restaurantes");
             }
 
-            while (actual != null)
+            while (act != null)
             {
-                Restaurante r = actual.Valor;
-                Console.WriteLine((indice + 1) + ". " + r.Nit + " - " + r.Nombre + " - " + r.Dueno + " - " + r.Celular);
-                indice++;
-                actual = actual.Siguiente;
+                Restaurante r = act.Valor;
+                Console.WriteLine((i + 1) + ". " + r.Nit + " - " + r.Nombre + " - " + r.Dueno + " - " + r.Celular);
+                i++;
+                act = act.Siguiente;
             }
 
-            Console.WriteLine("---------------------------");
             if (esperar)
             {
                 Console.WriteLine("presione enter para seguir");
                 Console.ReadLine();
             }
-            
-            // aqui selecciono un restaurante de la lista usando un numero
-            Restaurante SeleccionarRestaurante(ListaEnlazada<Restaurante> restaurantes)
+        }
+
+
+        // seleccionar restaurante
+        public static Restaurante SeleccionarRestaurante(ListaEnlazada<Restaurante> restaurantes)
+        {
+            while (true)
             {
-                while (true)
+                ListarRestaurantes(restaurantes, false);
+                Console.WriteLine("0. Volver");
+                Console.Write("Seleccione un numero: ");
+
+                string t = Console.ReadLine();
+
+                int op;
+                if (!int.TryParse(t, out op)) return null;
+                if (op == 0) return null;
+
+                int idx = op - 1;
+                int total = restaurantes.Longitud();
+
+                if (idx < 0 || idx >= total)
                 {
-                    ListarRestaurantes(restaurantes, false);
-                    Console.WriteLine("0. Volver");
-                    Console.Write("Seleccione un numero: ");
-                    string texto = Console.ReadLine();
-
-                    int opcion;
-                    if (!int.TryParse(texto, out opcion))
-                    {
-                        Console.WriteLine("opcion invalida");
-                        Console.ReadLine();
-                        return null;
-                    }
-
-                    if (opcion == 0)
-                    {
-                        return null;
-                    }
-
-                    int indice = opcion - 1;
-                    int total = restaurantes.Longitud();
-
-                    if (indice < 0 || indice >= total)
-                    {
-                        Console.WriteLine("opcion invalida");
-                        Console.ReadLine();
-                        return null;
-                    }
-
-                    Restaurante r = restaurantes.ObtenerPorIndice(indice);
-                    return r;
+                    Console.WriteLine("opcion invalida");
+                    Console.ReadLine();
+                    return null;
                 }
+
+                return restaurantes.ObtenerPorIndice(idx);
             }
-            
-            // aqui edito un restaurante
-            void EditarRestaurante(ListaEnlazada<Restaurante> restaurantes)
+        }
+
+
+        // editar restaurante
+        public static void EditarRestaurante(ListaEnlazada<Restaurante> restaurantes)
+        {
+            Console.Clear();
+            Console.WriteLine("=== EDITAR RESTAURANTE ===");
+
+            Restaurante r = SeleccionarRestaurante(restaurantes);
+            if (r == null) return;
+
+            while (true)
             {
                 Console.Clear();
-                Console.WriteLine("=== EDITAR RESTAURANTE ===");
+                Console.WriteLine(r.Nit + " - " + r.Nombre + " - " + r.Dueno + " - " + r.Celular + " - " + r.Direccion);
+                Console.WriteLine();
+                Console.WriteLine("1. cambiar nombre");
+                Console.WriteLine("2. cambiar dueño");
+                Console.WriteLine("3. cambiar celular");
+                Console.WriteLine("4. cambiar direccion");
+                Console.WriteLine("0. volver");
+                Console.Write("Seleccione una opcion: ");
+                string op = Console.ReadLine();
 
-                Restaurante r = SeleccionarRestaurante(restaurantes);
-                if (r == null)
+                if (op == "1")
+                {
+                    Console.Write("nuevo nombre: ");
+                    r.Nombre = Console.ReadLine();
+                }
+                else if (op == "2")
+                {
+                    Console.Write("nuevo dueño: ");
+                    r.Dueno = Console.ReadLine();
+                }
+                else if (op == "3")
+                {
+                    Console.Write("nuevo celular: ");
+                    string cel = Console.ReadLine();
+                    if (EsCelularValido(cel)) r.Celular = cel;
+                    else
+                    {
+                        Console.WriteLine("celular invalido");
+                        Console.ReadLine();
+                    }
+                }
+                else if (op == "4")
+                {
+                    Console.Write("nueva direccion: ");
+                    r.Direccion = Console.ReadLine();
+                }
+                else if (op == "0")
                 {
                     return;
                 }
-
-                while (true)
+                else
                 {
-                    Console.Clear();
-                    Console.WriteLine("restaurante seleccionado");
-                    Console.WriteLine(r.Nit + " - " + r.Nombre + " - " + r.Dueno + " - " + r.Celular + " - " + r.Direccion);
-                    Console.WriteLine();
-                    Console.WriteLine("1. Cambiar nombre");
-                    Console.WriteLine("2. Cambiar dueño");
-                    Console.WriteLine("3. Cambiar celular");
-                    Console.WriteLine("4. Cambiar direccion");
-                    Console.WriteLine("0. Volver");
-                    Console.Write("Seleccione una opcion: ");
-                    string opcion = Console.ReadLine();
-
-                    if (opcion == "1")
-                    {
-                        Console.Write("nuevo nombre: ");
-                        r.Nombre = Console.ReadLine();
-                    }
-                    else if (opcion == "2")
-                    {
-                        Console.Write("nuevo dueño: ");
-                        r.Dueno = Console.ReadLine();
-                    }
-                    else if (opcion == "3")
-                    {
-                        Console.Write("nuevo celular: ");
-                        string cel = Console.ReadLine();
-                        if (EsCelularValido(cel))
-                        {
-                            r.Celular = cel;
-                        }
-                        else
-                        {
-                            Console.WriteLine("celular invalido");
-                            Console.ReadLine();
-                        }
-                    }
-                    else if (opcion == "4")
-                    {
-                        Console.Write("nueva direccion: ");
-                        r.Direccion = Console.ReadLine();
-                    }
-                    else if (opcion == "0")
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("opcion invalida");
-                        Console.ReadLine();
-                    }
+                    Console.WriteLine("opcion invalida");
+                    Console.ReadLine();
                 }
             }
         }
