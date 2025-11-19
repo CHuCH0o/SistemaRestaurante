@@ -36,30 +36,25 @@ namespace SistemaRestaurante
                 }
                 else if (opcion == "2")
                 {
-                    Console.WriteLine("clientes aun no implementado");
-                    Console.ReadLine();
+                    Cliente.MenuClientes(restaurantes);
                 }
                 else if (opcion == "3")
                 {
-                    Console.WriteLine("platos aun no implementado");
-                    Console.ReadLine();
+                    Plato.MenuPlatos(restaurantes);
                 }
                 else if (opcion == "4")
                 {
-                    Console.WriteLine("pedidos aun no implementado");
-                    Console.ReadLine();
+                    Pedido.MenuPedidos(restaurantes);
                 }
                 else if (opcion == "5")
                 {
-                    Console.WriteLine("reportes aun no implementado");
-                    Console.ReadLine();
+                    Pedido.MenuReportes(restaurantes);
                 }
                 else
                 {
                     Console.WriteLine("opcion invalida");
                     Console.WriteLine("presione enter para seguir");
                     Console.ReadLine();
-
                 }
             }
         }
