@@ -222,5 +222,33 @@ namespace SistemaRestaurante
             Console.WriteLine("pedido despachado");
             Console.ReadLine();
         }
+        // menu reportes
+        public static void MenuReportes(ListaEnlazada<Restaurante> restaurantes)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=== REPORTES ===");
+                Console.WriteLine("1. Ver platos servidos hoy");
+                Console.WriteLine("2. Ver ganancias del dia");
+                Console.WriteLine("0. Volver al menu principal");
+                Console.Write("Seleccione una opcion: ");
+                string op = Console.ReadLine();
+
+                if (op == "0") return;
+
+                Restaurante r = Restaurante.SeleccionarRestaurante(restaurantes);
+                if (r == null) continue;
+
+                if (op == "1") VerPlatosServidosHoy(r);
+                else if (op == "2") VerGananciasDia(r);
+                else
+                {
+                    Console.WriteLine("opcion invalida");
+                    Console.ReadLine();
+                }
+            }
+        }
+        
     }
 }
