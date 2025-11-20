@@ -1,5 +1,3 @@
-using System;
-
 namespace SistemaRestaurante
 {
     // esta clase guarda datos del plato y maneja el menu de platos

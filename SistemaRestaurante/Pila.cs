@@ -1,5 +1,3 @@
-using System;
-
 namespace SistemaRestaurante;
 
 // esta es una pila simple
